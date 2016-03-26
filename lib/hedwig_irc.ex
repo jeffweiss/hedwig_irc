@@ -24,6 +24,11 @@ defmodule Hedwig.Adapters.IRC do
     {:noreply, state}
   end
 
+  def handle_cast({:emote, %{text: text, room: channel}}, state = {_robot, _opts, client}) do
+    ExIrc.Client.me client, channel, text
+    {:noreply, state}
+  end
+
   def handle_info(:connect, state = {_robot, opts, client}) do
     host = Keyword.fetch!(opts, :server)
     port = Keyword.get(opts, :port, 6667)

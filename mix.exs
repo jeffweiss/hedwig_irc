@@ -6,7 +6,7 @@ defmodule HedwigIrc.Mixfile do
 
   def project do
     [app: :hedwig_irc,
-     version: "0.1.0",
+     version: "0.1.1",
      elixir: "~> 1.2",
      name: "hedwig_irc",
      description: @description,
