@@ -106,9 +106,8 @@ config :alfred, Alfred.Robot,
   aka: "/",
   responders: [
     {Hedwig.Responders.Help, []},
-    {Hedwig.Responders.Panzy, []},
     {Hedwig.Responders.GreatSuccess, []},
-    {Hedwig.Responders.ShipIt, []}
+    {Hedwig.Responders.ShipIt, []},
   ]
 ```
 
