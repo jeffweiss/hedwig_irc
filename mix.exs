@@ -5,15 +5,17 @@ defmodule HedwigIrc.Mixfile do
   """
 
   def project do
-    [app: :hedwig_irc,
-     version: "0.1.3",
-     elixir: "~> 1.2",
-     name: "hedwig_irc",
-     description: @description,
-     package: package,
-     build_embedded: Mix.env == :prod,
-     start_permanent: Mix.env == :prod,
-     deps: deps]
+    [
+      app: :hedwig_irc,
+      version: "0.1.4",
+      elixir: "~> 1.2",
+      name: "hedwig_irc",
+      description: @description,
+      package: package(),
+      build_embedded: Mix.env == :prod,
+      start_permanent: Mix.env == :prod,
+      deps: deps(),
+    ]
   end
 
   # Configuration for the OTP application
@@ -34,15 +36,16 @@ defmodule HedwigIrc.Mixfile do
   # Type "mix help deps" for more examples and options
   defp deps do
     [
-      {:hedwig, "~> 1.0.0-rc3"},
-      {:exirc, "~> 0.10.0"},
+      {:hedwig, "~> 1.0"},
+      {:exirc, "~> 1.0"},
     ]
   end
 
   defp package do
-    [ maintainers: ["Jeff Weiss"],
+    [
+      maintainers: ["Jeff Weiss"],
       licenses: ["MIT"],
-      links: %{"Github" => "https://github.com/jeffweiss/hedwig_irc"}
+      links: %{"Github" => "https://github.com/jeffweiss/hedwig_irc"},
     ]
   end
 end

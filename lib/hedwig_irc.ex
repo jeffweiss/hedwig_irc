@@ -7,8 +7,8 @@ defmodule Hedwig.Adapters.IRC do
   def init({robot, opts}) do
     Logger.debug "#{inspect opts}"
     {:ok, client} = ExIrc.start_client!
-    ExIrc.Client.add_handler client, self
-    Kernel.send(self, :connect)
+    ExIrc.Client.add_handler client, self()
+    Kernel.send(self(), :connect)
     {:ok, {robot, opts, client}}
   end
 
@@ -32,15 +32,22 @@ defmodule Hedwig.Adapters.IRC do
   def handle_info(:connect, state = {_robot, opts, client}) do
     host = Keyword.fetch!(opts, :server)
     port = Keyword.get(opts, :port, 6667)
-    ExIrc.Client.connect! client, host, port
+    ssl? = Keyword.get(opts, :ssl?, false)
+    if ssl? do
+      ExIrc.Client.connect_ssl! client, host, port
+    else
+      ExIrc.Client.connect! client, host, port
+    end
     {:noreply, state}
   end
 
   def handle_info({:connected, server, port}, state = {_robot, opts, client}) do
     Logger.info "Connected to #{server}:#{port}"
     pass = Keyword.fetch!(opts, :password)
-    name = Keyword.fetch!(opts, :name)
-    ExIrc.Client.logon client, pass, name, name, name
+    nick = Keyword.fetch!(opts, :name)
+    user = Keyword.get(opts, :user, nick)
+    name = Keyword.get(opts, :full_name, nick)
+    ExIrc.Client.logon client, pass, nick, user, name
     {:noreply, state}
   end
 
@@ -62,7 +69,7 @@ defmodule Hedwig.Adapters.IRC do
         user: user,
         type: "groupchat"
       }
-    Hedwig.Robot.handle_message(robot, incoming_message)
+    Hedwig.Robot.handle_in(incoming_message, robot)
 
     {:noreply, state}
   end
@@ -75,7 +82,7 @@ defmodule Hedwig.Adapters.IRC do
         user: user,
         type: "groupchat"
       }
-    Hedwig.Robot.handle_message(robot, incoming_message)
+    Hedwig.Robot.handle_in(incoming_message, robot)
 
     {:noreply, state}
   end
