@@ -36,11 +36,12 @@ defmodule Hedwig.Adapters.IRC do
     {:noreply, state}
   end
 
-  def handle_info({:connected, server, port}, state = {_robot, opts, client}) do
+  def handle_info({:connected, server, port}, state = {robot, opts, client}) do
     Logger.info "Connected to #{server}:#{port}"
     pass = Keyword.fetch!(opts, :password)
     name = Keyword.fetch!(opts, :name)
     ExIrc.Client.logon client, pass, name, name, name
+    :ok = Hedwig.Robot.handle_connect(robot)
     {:noreply, state}
   end
 
