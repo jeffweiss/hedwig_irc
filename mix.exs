@@ -38,6 +38,7 @@ defmodule HedwigIrc.Mixfile do
     [
       {:hedwig, "~> 1.0"},
       {:exirc, "~> 1.0"},
+      {:ex_doc, "~> 0.18", only: :dev},
     ]
   end
 
