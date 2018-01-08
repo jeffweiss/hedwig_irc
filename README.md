@@ -136,11 +136,15 @@ use Mix.Config
 config :alfred, Alfred.Robot,
   adapter: Hedwig.Adapters.IRC,
   name: "alfred",
+  user: "alfred", # optional, defaults to `:name`
+  full_name: "Alfred Bot", # optional, defaults to `:name`
   # we needed to change this, remember?
   aka: "!",
   # fill in the appropriate password for your bot
   password: "password",
   server: "chat.freenode.net",
+  port: 6697, # optional, defaults to `6667`
+  ssl?: true, # optional, defaults to `false`
   rooms: [
     # fill in the appropriate channels for your IRC server
     {"#elixir-lang", ""}
