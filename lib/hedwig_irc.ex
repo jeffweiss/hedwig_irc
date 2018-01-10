@@ -91,6 +91,11 @@ defmodule Hedwig.Adapters.IRC do
     Logger.info "#{user} left with message: #{inspect message}"
     {:noreply, state}
   end
+  
+  def handle_info(:disconnected, state = {robot, _opts, _client}) do
+    Robot.handle_disconnect(robot, nil)
+    {:noreply, state}
+  end
 
   def handle_info(msg, state) do
     Logger.debug "Unknown message: #{inspect msg}"
