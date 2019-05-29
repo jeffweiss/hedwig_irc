@@ -1,5 +1,6 @@
 defmodule HedwigIrc.Mixfile do
   use Mix.Project
+
   @description """
     An IRC adapter for Hedwig
   """
@@ -12,9 +13,9 @@ defmodule HedwigIrc.Mixfile do
       name: "hedwig_irc",
       description: @description,
       package: package(),
-      build_embedded: Mix.env == :prod,
-      start_permanent: Mix.env == :prod,
-      deps: deps(),
+      build_embedded: Mix.env() == :prod,
+      start_permanent: Mix.env() == :prod,
+      deps: deps()
     ]
   end
 
@@ -37,8 +38,8 @@ defmodule HedwigIrc.Mixfile do
   defp deps do
     [
       {:hedwig, "~> 1.0"},
-      {:exirc, "~> 1.0"},
-      {:ex_doc, "~> 0.18", only: :dev},
+      {:exirc, "~> 1.1.0"},
+      {:ex_doc, "~> 0.18", only: :dev}
     ]
   end
 
@@ -46,7 +47,7 @@ defmodule HedwigIrc.Mixfile do
     [
       maintainers: ["Jeff Weiss"],
       licenses: ["MIT"],
-      links: %{"Github" => "https://github.com/jeffweiss/hedwig_irc"},
+      links: %{"Github" => "https://github.com/jeffweiss/hedwig_irc"}
     ]
   end
 end
