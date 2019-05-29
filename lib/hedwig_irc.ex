@@ -5,16 +5,16 @@ defmodule Hedwig.Adapters.IRC do
 
   require Logger
 
-  alias ExIrc.Client
-  alias ExIrc.SenderInfo
+  alias ExIRC.Client
+  alias ExIRC.SenderInfo
   alias Hedwig.User
   alias Hedwig.Message
   alias Hedwig.Robot
 
   def init({robot, opts}) do
     Logger.debug "#{inspect(opts)}"
-    {:ok, client} = ExIrc.start_client!
-    ExIrc.Client.add_handler client, self()
+    {:ok, client} = ExIRC.start_client!
+    ExIRC.Client.add_handler client, self()
     Kernel.send(self(), :connect)
     {:ok, {robot, opts, client}}
   end
@@ -91,7 +91,7 @@ defmodule Hedwig.Adapters.IRC do
     Logger.info "#{user} left with message: #{inspect message}"
     {:noreply, state}
   end
-  
+
   def handle_info(:disconnected, state = {robot, _opts, _client}) do
     Robot.handle_disconnect(robot, nil)
     {:noreply, state}
